@@ -1,0 +1,9 @@
+{
+  "name": "hive-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "npx serve .",
+    "build": "mkdir -p dist && cp index.html dist/index.html && cp main.js dist/main.js"
+  }
+}

@@ -1,0 +1,41 @@
+{
+    "id": "validate_content_v1",
+    "name": "Content Validator",
+    "description": "Validates content (text or code) against a set of criteria and provides feedback.",
+    "version": "1.1.0",
+    "input_schema": {
+        "type": "object",
+        "properties": {
+            "text_content": { "type": "string", "description": "The text content to be validated." },
+            "code_content": { "type": "string", "description": "The code content to be validated." },
+            "validation_criteria": {
+                "type": "array",
+                "items": { "type": "string" },
+                "description": "A list of criteria to validate against (e.g., 'Is factual', 'Meets length requirements', 'Is grammatically correct', 'Check for syntax errors', 'Check for basic style guide violations')."
+            }
+        }
+    },
+    "output_schema": {
+        "type": "object",
+        "properties": {
+            "is_valid": { "type": "boolean", "description": "Overall validation status (true if all criteria met, false otherwise)." },
+            "feedback": { "type": "string", "description": "Detailed feedback, especially if not valid." },
+            "criteria_results": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "criterion": { "type": "string" },
+                        "passed": { "type": "boolean" },
+                        "comment": { "type": "string" }
+                    },
+                    "required": ["criterion", "passed", "comment"]
+                },
+                "description": "Results for each validation criterion."
+            }
+        },
+        "required": ["is_valid", "feedback", "criteria_results"]
+    },
+    "template_engine": "handlebars",
+    "template": "You are a meticulous validator. Your task is to validate the following content against a set of criteria.\n\nContent to Validate:\n{{#if code_content}}\n```\n{{code_content}}\n```\n{{else if text_content}}\n\"{{text_content}}\"\n{{else}}\nNo content provided for validation.\n{{/if}}\n\n{{#if validation_criteria}}\nValidation Criteria:\n{{#each validation_criteria}}\n- {{this}}\n{{/each}}\n{{else}}\nNo specific validation criteria provided. Perform a general validation based on content type.\n{{/if}}\n\nFor each criterion (if provided), determine if the content passes and provide a brief comment. If no criteria are provided, perform a general validation suitable for the content type (text or code) and provide feedback. Then, provide an overall validation status (`is_valid`) which is true only if ALL criteria pass (or if general validation finds no issues), and overall feedback.\n\nOutput the result in JSON format as a single JSON object with keys: \"is_valid\" (boolean), \"feedback\" (string), and \"criteria_results\" (an array of objects, each with \"criterion\", \"passed\", and \"comment\").\n\nExample of the expected JSON output format:\n```json\n{\n  \"is_valid\": false,\n  \"feedback\": \"The content fails on grammatical accuracy and does not meet the length requirement.\",\n  \"criteria_results\": [\n    { \"criterion\": \"Is factual\", \"passed\": true, \"comment\": \"Content appears factual based on provided information.\" },\n    { \"criterion\": \"Meets length requirements\", \"passed\": false, \"comment\": \"Content is too short.\" },\n    { \"criterion\": \"Is grammatically correct\", \"passed\": false, \"comment\": \"Several grammatical errors found.\" }\n  ]\n}\n```\n\nValidate the content now."
+}

@@ -1,0 +1,37 @@
+{
+    "id": "decompose_task_v1",
+    "name": "Task Decomposer",
+    "description": "Decomposes a high-level objective into a list of subtasks with dependencies.",
+    "version": "1.0.0",
+    "input_schema": {
+        "type": "object",
+        "properties": {
+            "objective": { "type": "string", "description": "The high-level objective to decompose." },
+            "context": { "type": "string", "description": "Optional additional context for decomposition." }
+        },
+        "required": ["objective"]
+    },
+    "output_schema": {
+        "type": "object",
+        "properties": {
+            "subtasks": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "title": { "type": "string" },
+                        "description": { "type": "string" },
+                        "dependencies": {
+                            "type": "array",
+                            "items": { "type": "string" }
+                        }
+                    },
+                    "required": ["title", "description", "dependencies"]
+                }
+            }
+        },
+        "required": ["subtasks"]
+    },
+    "template_engine": "handlebars",
+    "template": "You are an expert project planner. Your task is to decompose the following high-level objective into a series of smaller, manageable subtasks.\\nFor each subtask, provide a clear title and a detailed description.\\nAlso, identify any dependencies between these subtasks. A subtask can only start after all its dependencies are completed. Dependencies should be listed by their titles.\\n\\nHigh-Level Objective: {{objective}}\\n\\nContext (if any): {{context}}\\n\\nOutput the subtasks in JSON format as a single JSON object containing a key \"subtasks\", which is an array of objects. Each object in the array must have the following fields:\\n- \"title\": A concise title for the subtask (must be unique within this decomposition).\\n- \"description\": A detailed description of what needs to be done for this subtask.\\n- \"dependencies\": An array of titles of other subtasks (from this decomposition) that this subtask depends on. If no dependencies, provide an empty array.\\n\\nExample of the expected JSON output format:\\n```json\\n{\\n  \"subtasks\": [\\n    {\\n      \"title\": \"Subtask A\",\\n      \"description\": \"Detailed steps for Subtask A.\",\\n      \"dependencies\": []\\n    },\\n    {\\n      \"title\": \"Subtask B\",\\n      \"description\": \"Detailed steps for Subtask B.\",\\n      \"dependencies\": [\"Subtask A\"]\\n    }\\n  ]\\n}\\n```\\n\\nPlease provide the list of subtasks based on the objective and context above, strictly adhering to the JSON output format."
+}

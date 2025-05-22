@@ -1,0 +1,14 @@
+{
+    "id": "SummarizeTextV1",
+    "description": "Summarizes a given block of text using a default model.",
+    "version": "1.0.0",
+    "applicable_agent_roles": ["Researcher", "Writer"],
+    "input_schema": "{\\\"type\\\": \\\"object\\\", \\\"properties\\\": {\\\"text_to_summarize\\\": {\\\"type\\\": \\\"string\\\"}, \\\"max_length\\\": {\\\"type\\\": \\\"integer\\\"}}, \\\"required\\\": [\\\"text_to_summarize\\\"]}",
+    "output_schema": "{\\\"type\\\": \\\"object\\\", \\\"properties\\\": {\\\"summary\\\": {\\\"type\\\": \\\"string\\\"}}, \\\"required\\\": [\\\"summary\\\"]}",
+    "template": "System: You are an expert summarizer.\nUser: Summarize the following text concisely, aiming for under {{data.max_length}} words if specified, otherwise be brief:\n\n{{data.text_to_summarize}}",
+    "logic_module_path": null,
+    "default_llm_provider": "openrouter",
+    "default_llm_model": "meta-llama/llama-3-8b-instruct",
+    "default_llm_parameters": { "temperature": 0.7 },
+    "tags": ["text_processing", "summary"]
+}

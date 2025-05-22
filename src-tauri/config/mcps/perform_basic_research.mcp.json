@@ -1,0 +1,28 @@
+{
+    "id": "perform_basic_research_v1",
+    "name": "Basic Web Researcher",
+    "description": "Simulates performing a web search for a given query and returns a summary.",
+    "version": "1.0.0",
+    "input_schema": {
+        "type": "object",
+        "properties": {
+            "query": { "type": "string", "description": "The research query." },
+            "num_results_to_summarize": { "type": "integer", "description": "Number of hypothetical search results to summarize.", "default": 3 }
+        },
+        "required": ["query"]
+    },
+    "output_schema": {
+        "type": "object",
+        "properties": {
+            "summary": { "type": "string", "description": "A summary of the research findings." },
+            "sources": {
+                "type": "array",
+                "items": { "type": "string" },
+                "description": "List of hypothetical source URLs."
+            }
+        },
+        "required": ["summary", "sources"]
+    },
+    "template_engine": "handlebars",
+    "template": "You are a helpful research assistant. A user wants to find information about the following query: \"{{query}}\".\n\nPlease provide a concise summary as if you had searched the web and synthesized information from the top {{num_results_to_summarize}} results. \nAlso, list {{num_results_to_summarize}} hypothetical source URLs that might contain this information.\n\nOutput the result in JSON format as a single JSON object with two keys: \"summary\" (a string) and \"sources\" (an array of strings).\n\nExample of the expected JSON output format:\n```json\n{\n  \"summary\": \"Based on web research, [synthesized information about the query]...\",\n  \"sources\": [\n    \"https://example.com/source1\",\n    \"https://example.com/source2\",\n    \"https://example.com/source3\"\n  ]\n}\n```\n\nPerform the research for the query: \"{{query}}\" and provide the summary and sources."
+}

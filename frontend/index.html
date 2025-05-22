@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>HIVE</title>
+</head>
+<body>
+    <h1>HIVE - Agent Task Orchestration</h1>
+
+    <div class="task-container">
+        <div class="input-group">
+            <label for="prompt-input">Prompt de la tâche :</label>
+            <textarea id="prompt-input" rows="5" placeholder="Saisissez votre prompt ici..."></textarea>
+        </div>
+
+        <div class="input-group">
+            <label for="agent-select">Sélectionner un agent :</label>
+            <select id="agent-select">
+                <option value="WriterAgent">WriterAgent</option>
+                <option value="SimpleWorker">SimpleWorker</option>
+                <option value="CoderAgent">CoderAgent</option>
+                <option value="PlannerAgent">PlannerAgent</option>
+                <option value="ResearcherAgent">ResearcherAgent</option>
+                <option value="ValidatorAgent">ValidatorAgent</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label for="llm-model-select">Sélectionner un modèle LLM (OpenRouter) :</label>
+            <select id="llm-model-select">
+                <option value="google/gemma-3n-e4b-it:free">google/gemma-3n-e4b-it:free</option>
+                <option value="mistralai/mistral-7b-instruct:free">mistralai/mistral-7b-instruct:free</option>
+                <option value="openai/gpt-3.5-turbo">openai/gpt-3.5-turbo</option>
+                <option value="openai/gpt-4o">openai/gpt-4o</option>
+                <option value="anthropic/claude-3-haiku">anthropic/claude-3-haiku</option>
+            </select>
+        </div>
+
+        <button id="execute-task-button">Lancer la tâche</button>
+
+        <div class="task-output">
+            <h3>Statut de la tâche : <span id="task-status">En attente</span></h3>
+            <h3>Résultat :</h3>
+            <pre id="task-result"></pre>
+        </div>
+    </div>
+
+    <script src="./main.js"></script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+{
+    "id": "generate_code_v1",
+    "name": "Code Generator",
+    "description": "Generates code based on a given instruction and target language.",
+    "version": "1.0.0",
+    "input_schema": {
+        "type": "object",
+        "properties": {
+            "instruction": { "type": "string", "description": "The detailed instruction for what code to generate." },
+            "language": { "type": "string", "description": "The target programming language (e.g., python, javascript, rust)." },
+            "context": { "type": "string", "description": "Optional existing code or context to consider." }
+        },
+        "required": ["instruction", "language"]
+    },
+    "output_schema": {
+        "type": "object",
+        "properties": {
+            "generated_code": { "type": "string", "description": "The generated code snippet." },
+            "explanation": { "type": "string", "description": "A brief explanation of the generated code." }
+        },
+        "required": ["generated_code"]
+    },
+    "template_engine": "handlebars",
+    "template": "You are an expert programmer. Your task is to generate a code snippet in {{language}} based on the following instruction:\n\nInstruction: {{instruction}}\n\n{{#if context}}\nExisting context/code to consider:\n```{{language}}\n{{{context}}}\n```\n{{/if}}\n\nPlease generate the code as requested. Also provide a brief explanation of the code.\n\nOutput the result in JSON format as a single JSON object with two keys: \"generated_code\" (a string containing the code) and \"explanation\" (a string).\n\nExample of the expected JSON output format:\n```json\n{\n  \"generated_code\": \"def add(a, b):\\n  return a + b\",\n  \"explanation\": \"This Python function 'add' takes two arguments, 'a' and 'b', and returns their sum.\"\n}\n```\n\nGenerate the {{language}} code now."
+}
